@@ -11,9 +11,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
+
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap');
 
 *{
 box-sizing:border-box;
@@ -27,7 +28,7 @@ margin:0;
 min-height:100vh;
 
 background:
-radial-gradient(circle at top left,#9b00ff55,transparent 40%),
+radial-gradient(circle at top,#8b00ff55,transparent 40%),
 linear-gradient(135deg,#050505,#18002b);
 
 color:white;
@@ -35,8 +36,7 @@ color:white;
 }
 
 
-
-.wrapper{
+.container{
 
 max-width:1400px;
 margin:auto;
@@ -44,7 +44,7 @@ padding:40px;
 
 display:grid;
 
-grid-template-columns:330px 1fr;
+grid-template-columns:350px 1fr;
 
 gap:30px;
 
@@ -54,13 +54,13 @@ gap:30px;
 
 .card{
 
-background:#111111dd;
+background:#111;
 
 border-radius:30px;
 
-padding:30px;
+padding:35px;
 
-border:1px solid #ffffff15;
+box-shadow:0 0 40px #000;
 
 }
 
@@ -76,7 +76,7 @@ display:flex;
 
 align-items:center;
 
-gap:12px;
+gap:15px;
 
 }
 
@@ -92,9 +92,9 @@ width:55px;
 
 .avatar{
 
-width:150px;
+width:170px;
 
-height:150px;
+height:170px;
 
 border-radius:50%;
 
@@ -102,7 +102,7 @@ display:block;
 
 margin:40px auto 20px;
 
-border:4px solid #a855ff;
+border:5px solid #a855ff;
 
 }
 
@@ -112,7 +112,7 @@ border:4px solid #a855ff;
 
 text-align:center;
 
-font-size:28px;
+font-size:30px;
 
 font-weight:900;
 
@@ -122,19 +122,19 @@ font-weight:900;
 
 .balance{
 
-background:
+padding:35px;
 
-linear-gradient(
+border-radius:25px;
+
+background:linear-gradient(
 135deg,
 #8500ff,
-#420080
+#430080
 );
 
-padding:40px;
-
-border-radius:30px;
-
 text-align:center;
+
+font-size:20px;
 
 }
 
@@ -142,7 +142,7 @@ text-align:center;
 
 .balance img{
 
-width:60px;
+width:55px;
 
 vertical-align:middle;
 
@@ -150,9 +150,9 @@ vertical-align:middle;
 
 
 
-.number{
+.amount{
 
-font-size:70px;
+font-size:65px;
 
 font-weight:900;
 
@@ -160,13 +160,9 @@ font-weight:900;
 
 
 
-.title{
+h1{
 
-font-size:32px;
-
-font-weight:900;
-
-margin-top:35px;
+font-size:35px;
 
 }
 
@@ -180,15 +176,13 @@ grid-template-columns:repeat(2,1fr);
 
 gap:20px;
 
-margin-top:20px;
-
 }
 
 
 
 .quest{
 
-background:#181818;
+background:#191919;
 
 padding:25px;
 
@@ -212,25 +206,25 @@ font-weight:900;
 
 button{
 
-margin-top:20px;
-
 width:100%;
 
 padding:16px;
+
+margin-top:20px;
 
 border:0;
 
 border-radius:15px;
 
 background:linear-gradient(
-90deg,
-#8b00ff,
-#d05cff
+90deg,#8b00ff,#d05cff
 );
 
 color:white;
 
 font-weight:900;
+
+font-size:18px;
 
 cursor:pointer;
 
@@ -240,7 +234,17 @@ cursor:pointer;
 
 button:disabled{
 
-opacity:.4;
+background:#333;
+
+color:#777;
+
+}
+
+
+
+.withdraw{
+
+margin-top:30px;
 
 }
 
@@ -248,7 +252,7 @@ opacity:.4;
 
 @media(max-width:900px){
 
-.wrapper{
+.container{
 
 grid-template-columns:1fr;
 
@@ -263,17 +267,17 @@ grid-template-columns:1fr;
 
 }
 
+
 </style>
 
 </head>
 
 
-
 <body>
 
 
-<div class="wrapper">
 
+<div class="container">
 
 
 <div class="card">
@@ -300,9 +304,8 @@ Loading...
 </div>
 
 
+
 </div>
-
-
 
 
 
@@ -314,21 +317,19 @@ Loading...
 
 <div class="balance">
 
+Your Balance
 
-<div>
-YOUR BALANCE
-</div>
+<br>
 
-
-<div class="number">
 
 <img src="https://i.imgur.com/18anndb.png">
 
-<span id="balance">
+
+<span class="amount" id="balance">
 0
 </span>
 
-</div>
+RBX
 
 
 </div>
@@ -336,22 +337,19 @@ YOUR BALANCE
 
 
 
-
-<div class="title">
+<h1>
 ⭐ Quests
-</div>
-
-
-<div class="quests" id="quests">
-
-</div>
+</h1>
 
 
 
+<div id="quests" class="quests"></div>
 
-<button onclick="location.href='withdraw.html'">
 
-💸 Withdraw
+
+<button class="withdraw" onclick="location.href='withdraw.html'">
+
+Withdraw RBX
 
 </button>
 
@@ -360,10 +358,7 @@ YOUR BALANCE
 </div>
 
 
-
-
 </div>
-
 
 
 
@@ -383,7 +378,6 @@ SUPABASE_KEY
 
 
 
-
 let user =
 JSON.parse(
 localStorage.getItem("dreamy_user")
@@ -398,6 +392,9 @@ location.href="index.html";
 }
 
 
+
+
+let currentUser;
 
 
 
@@ -419,7 +416,6 @@ let {data,error}=await db
 
 
 
-
 if(error){
 
 console.log(error);
@@ -430,16 +426,16 @@ return;
 
 
 
+currentUser=data;
+
 
 
 document.getElementById("username").innerHTML =
 "@"+data.username;
 
 
-
 document.getElementById("avatar").src =
 data.avatar;
-
 
 
 document.getElementById("balance").innerHTML =
@@ -447,11 +443,27 @@ data.balance;
 
 
 
-localStorage.setItem(
-"dreamy_user",
-JSON.stringify(data)
-);
+if(!data.claimed_quests){
 
+await db
+
+.from("users")
+
+.update({
+
+claimed_quests:[]
+
+})
+
+.eq("username",data.username);
+
+
+currentUser.claimed_quests=[];
+
+}
+
+
+loadQuests();
 
 
 }
@@ -460,16 +472,46 @@ JSON.stringify(data)
 
 
 
-const quests=[
 
 
-["Watch KreekCraft Video",15],
+const allQuests=[
 
-["Daily Login",10],
 
-["Visit Dreamy RBX",5],
+{
+id:"daily",
+name:"Daily Reward",
+reward:10
+},
 
-["Play Roblox",20]
+
+{
+id:"video",
+name:"Watch KreekCraft Video",
+reward:15
+},
+
+
+{
+id:"visit",
+name:"Visit Dreamy RBX",
+reward:5
+},
+
+
+{
+id:"roblox",
+name:"Play Roblox",
+reward:20
+},
+
+
+{
+id:"community",
+name:"Join Community",
+reward:10
+}
+
+
 
 ];
 
@@ -477,43 +519,65 @@ const quests=[
 
 
 
+let shown=[];
+
+
 
 function loadQuests(){
 
 
-let box=document.getElementById("quests");
+
+shown =
+allQuests
+.sort(()=>Math.random()-0.5)
+.slice(0,4);
+
+
+
+let box =
+document.getElementById("quests");
+
 
 
 box.innerHTML="";
 
 
 
-quests.forEach(q=>{
+shown.forEach(q=>{
 
 
-box.innerHTML+=`
+
+let claimed =
+currentUser.claimed_quests.includes(q.id);
+
+
+
+box.innerHTML += `
 
 <div class="quest">
 
-<h2>${q[0]}</h2>
+<h2>${q.name}</h2>
+
 
 <p>
-
 Complete this quest
-
 </p>
 
 
 <div class="reward">
 
-+${q[1]} RBX
++${q.reward} RBX
 
 </div>
 
 
-<button>
+<button
 
-Claim
+${claimed?"disabled":""}
+
+onclick="claim('${q.id}',${q.reward})">
+
+${claimed?"Claimed":"Claim"}
 
 </button>
 
@@ -531,13 +595,104 @@ Claim
 
 
 
-loadUser();
+
+
+
+async function claim(id,reward){
+
+
+
+let balance =
+currentUser.balance;
+
+
+
+if(balance >= 200){
+
+alert("Balance limit reached");
+
+return;
+
+}
+
+
+
+
+let newBalance =
+Math.min(
+200,
+balance+reward
+);
+
+
+
+
+let claimed =
+currentUser.claimed_quests || [];
+
+
+
+claimed.push(id);
+
+
+
+
+
+
+let {error}=await db
+
+.from("users")
+
+.update({
+
+balance:newBalance,
+
+claimed_quests:claimed
+
+})
+
+.eq("username",currentUser.username);
+
+
+
+
+
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+
+
+
+currentUser.balance=newBalance;
+
+currentUser.claimed_quests=claimed;
+
+
+
+document.getElementById("balance").innerHTML =
+newBalance;
+
 
 loadQuests();
 
 
 
+}
+
+
+
+loadUser();
+
+
+
 </script>
+
 
 
 </body>
