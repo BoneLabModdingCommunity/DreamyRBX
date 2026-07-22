@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dreamy RBX Dashboard</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
+
+*{
+box-sizing:border-box;
+font-family:Inter,Arial,sans-serif;
+}
+
+
+body{
+
+margin:0;
+min-height:100vh;
+
+background:
+radial-gradient(circle at top,#8b00ff55,transparent 40%),
+linear-gradient(135deg,#070707,#1b002b);
+
+color:white;
+
+display:flex;
+justify-content:center;
+
+}
+
+
+
+.container{
+
+width:900px;
+padding:40px;
+
+}
+
+
+
+.header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+background:#141414cc;
+
+padding:25px;
+
+border-radius:25px;
+
+border:1px solid #ffffff10;
+
+}
+
+
+
+.user{
+
+display:flex;
+align-items:center;
+gap:15px;
+
+}
+
+
+
+.user img{
+
+width:80px;
+height:80px;
+border-radius:50%;
+
+}
+
+
+
+h1{
+
+margin:0;
+
+}
+
+
+
+.purple{
+
+color:#b65cff;
+
+}
+
+
+
+.balance{
+
+margin-top:30px;
+
+background:
+linear-gradient(
+135deg,
+#8b00ff,
+#420080
+);
+
+padding:30px;
+
+border-radius:25px;
+
+text-align:center;
+
+}
+
+
+
+.balance h2{
+
+margin:0;
+
+font-size:18px;
+
+opacity:.8;
+
+}
+
+
+
+.amount{
+
+font-size:45px;
+
+font-weight:800;
+
+margin-top:10px;
+
+}
+
+
+
+.card{
+
+margin-top:30px;
+
+background:#141414cc;
+
+padding:25px;
+
+border-radius:25px;
+
+border:1px solid #ffffff10;
+
+}
+
+
+
+.quest{
+
+background:#111;
+
+padding:20px;
+
+border-radius:15px;
+
+margin-top:15px;
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+
+
+.reward{
+
+color:#b65cff;
+
+font-weight:bold;
+
+}
+
+
+
+button{
+
+border:none;
+
+background:#9b00ff;
+
+color:white;
+
+padding:12px 20px;
+
+border-radius:12px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+background:#c15cff;
+
+}
+
+
+
+.withdraw{
+
+margin-top:30px;
+
+width:100%;
+
+padding:16px;
+
+font-size:16px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+
+<div class="container">
+
+
+
+<div class="header">
+
+
+<div class="user">
+
+<img id="avatar">
+
+<div>
+
+<h1>
+Dreamy <span class="purple">RBX</span>
+</h1>
+
+<p id="username">
+Loading...
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="balance">
+
+<h2>
+Your Balance
+</h2>
+
+
+<div class="amount">
+
+💰 <span id="balance">
+0
+</span> RBX
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+
+<h2>
+⭐ Quests
+</h2>
+
+
+
+<div class="quest">
+
+<div>
+
+<b>
+Click This
+</b>
+
+<br>
+
+<span class="reward">
++5 RBX
+</span>
+
+</div>
+
+
+<button onclick="clickQuest()">
+Complete
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div class="quest">
+
+<div>
+
+<b>
+Daily Reward
+</b>
+
+<br>
+
+<span class="reward">
++10 RBX
+</span>
+
+</div>
+
+
+<button onclick="dailyReward()">
+Claim
+</button>
+
+
+</div>
+
+
+
+<button class="withdraw" onclick="location.href='withdraw.html'">
+
+💸 Withdraw
+
+</button>
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+<script>
+
+
+let user = JSON.parse(
+localStorage.getItem("dreamy_user")
+);
+
+
+
+if(!user){
+
+location.href="index.html";
+
+}
+
+
+
+
+document.getElementById("avatar").src=user.avatar;
+
+
+document.getElementById("username").innerHTML=
+"@" + user.username;
+
+
+
+
+let balance =
+localStorage.getItem("dreamy_balance");
+
+
+
+if(balance === null){
+
+balance=0;
+
+localStorage.setItem(
+"dreamy_balance",
+0
+);
+
+}
+
+
+
+document.getElementById("balance").innerHTML=balance;
+
+
+
+
+
+function updateBalance(amount){
+
+
+balance =
+Number(balance)+amount;
+
+
+localStorage.setItem(
+"dreamy_balance",
+balance
+);
+
+
+document.getElementById("balance").innerHTML=balance;
+
+
+}
+
+
+
+
+
+function clickQuest(){
+
+
+updateBalance(5);
+
+
+alert("+5 RBX earned!");
+
+}
+
+
+
+
+
+function dailyReward(){
+
+
+let today =
+new Date().toDateString();
+
+
+
+let claimed =
+localStorage.getItem("daily_reward");
+
+
+
+if(claimed === today){
+
+alert("Already claimed today!");
+
+return;
+
+}
+
+
+
+localStorage.setItem(
+"daily_reward",
+today
+);
+
+
+
+updateBalance(10);
+
+
+
+alert("+10 RBX Daily Reward!");
+
+}
+
+
+
+</script>
+
+
+</body>
+
+</html>
