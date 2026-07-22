@@ -6,20 +6,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dreamy RBX Login</title>
+<title>Dreamy RBX</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase.js"></script>
 
+
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap');
 
 *{
 box-sizing:border-box;
 font-family:Inter,Arial;
 }
-
 
 body{
 
@@ -27,17 +27,16 @@ margin:0;
 height:100vh;
 
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 
 background:
-radial-gradient(circle at top,#9b00ff55,transparent 40%),
-linear-gradient(135deg,#050505,#18002b);
+radial-gradient(circle,#8b00ff55,transparent 40%),
+linear-gradient(135deg,#050505,#19002b);
 
 color:white;
 
 }
-
 
 
 .box{
@@ -46,13 +45,13 @@ width:600px;
 
 padding:50px;
 
-background:#111111dd;
+background:#111;
 
 border-radius:35px;
 
-text-align:center;
+box-shadow:0 0 60px #8b00ff55;
 
-box-shadow:0 0 60px #8b00ff50;
+text-align:center;
 
 }
 
@@ -66,14 +65,13 @@ font-weight:900;
 
 display:flex;
 
-align-items:center;
-
 justify-content:center;
+
+align-items:center;
 
 gap:15px;
 
 }
-
 
 
 .logo img{
@@ -84,33 +82,23 @@ width:70px;
 
 
 
-p{
-
-color:#aaa;
-
-font-size:18px;
-
-}
-
-
-
 input{
+
+margin-top:30px;
 
 width:100%;
 
 padding:20px;
 
-margin-top:25px;
+font-size:20px;
 
 border-radius:15px;
 
+background:#050505;
+
 border:1px solid #333;
 
-background:#080808;
-
 color:white;
-
-font-size:20px;
 
 }
 
@@ -118,9 +106,9 @@ font-size:20px;
 
 button{
 
-width:100%;
-
 margin-top:25px;
+
+width:100%;
 
 padding:20px;
 
@@ -128,19 +116,15 @@ border:0;
 
 border-radius:15px;
 
-background:
-
-linear-gradient(
-90deg,
-#8b00ff,
-#d05cff
-);
-
-color:white;
-
 font-size:20px;
 
 font-weight:900;
+
+background:linear-gradient(
+90deg,#8b00ff,#d05cff
+);
+
+color:white;
 
 cursor:pointer;
 
@@ -157,8 +141,8 @@ color:#ff7777;
 }
 
 
-
 </style>
+
 
 </head>
 
@@ -178,9 +162,8 @@ Dreamy RBX
 </div>
 
 
-
 <h1>
-Welcome
+Login
 </h1>
 
 
@@ -189,13 +172,9 @@ Enter your Roblox username
 </p>
 
 
-
 <input
-
 id="username"
-
 placeholder="Roblox Username">
-
 
 
 <button onclick="login()">
@@ -205,14 +184,10 @@ Continue
 </button>
 
 
-
 <div id="error"></div>
 
 
-
 </div>
-
-
 
 
 
@@ -230,6 +205,75 @@ SUPABASE_KEY
 
 
 
+async function getRobloxUser(username){
+
+
+let response =
+await fetch(
+"https://users.roblox.com/v1/usernames/users",
+{
+
+method:"POST",
+
+headers:{
+"Content-Type":"application/json"
+},
+
+body:JSON.stringify({
+
+usernames:[username],
+
+excludeBannedUsers:true
+
+})
+
+});
+
+
+
+let data =
+await response.json();
+
+
+
+if(!data.data || data.data.length === 0){
+
+return null;
+
+}
+
+
+
+return data.data[0];
+
+}
+
+
+
+
+
+async function getAvatar(id){
+
+
+let r =
+await fetch(
+
+`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=420x420&format=Png`
+
+);
+
+
+let data =
+await r.json();
+
+
+return data.data[0].imageUrl;
+
+
+}
+
+
+
 
 
 async function login(){
@@ -244,15 +288,28 @@ let error =
 document.getElementById("error");
 
 
-
 error.innerHTML="";
 
 
 
 if(!username){
 
-error.innerHTML=
-"Enter a username";
+error.innerHTML="Enter a username";
+
+return;
+
+}
+
+
+
+let roblox =
+await getRobloxUser(username);
+
+
+
+if(!roblox){
+
+error.innerHTML="Roblox user not found";
 
 return;
 
@@ -261,26 +318,23 @@ return;
 
 
 
-
-// Roblox avatar API
-
 let avatar =
-"https://www.roblox.com/headshot-thumbnail/image?userId=1&width=420&height=420&format=png";
+await getAvatar(
+roblox.id
+);
 
 
 
 
 
-// Check user
 
-
-let {data,error:dbError}=await client
+let {data}=await client
 
 .from("users")
 
 .select("*")
 
-.eq("username",username)
+.eq("username",roblox.name)
 
 .single();
 
@@ -290,21 +344,17 @@ let {data,error:dbError}=await client
 
 
 
-// Create new user
-
-
 if(!data){
 
 
-
-let insert =
+let result =
 await client
 
 .from("users")
 
 .insert({
 
-username:username,
+username:roblox.name,
 
 avatar:avatar,
 
@@ -316,12 +366,10 @@ balance:0
 .single();
 
 
-
-data=insert.data;
+data=result.data;
 
 
 }
-
 
 
 
@@ -338,13 +386,11 @@ JSON.stringify(data)
 
 
 
-
 location.href="dashboard.html";
 
 
 
 }
-
 
 
 
