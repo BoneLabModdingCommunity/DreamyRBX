@@ -12,38 +12,32 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
 
-
 *{
 box-sizing:border-box;
 font-family:Inter,Arial;
 }
 
-
 body{
 
 margin:0;
-
 min-height:100vh;
 
 background:
 radial-gradient(circle at top,#9b00ff55,transparent 40%),
 linear-gradient(135deg,#050505,#18002b);
 
-color:white;
-
 display:flex;
-
+align-items:center;
 justify-content:center;
 
-align-items:center;
+color:white;
 
 }
 
 
-
 .box{
 
-width:600px;
+width:650px;
 
 padding:45px;
 
@@ -53,13 +47,11 @@ border-radius:35px;
 
 border:1px solid #ffffff15;
 
-box-shadow:0 0 50px #8b00ff30;
+box-shadow:0 0 60px #8b00ff40;
 
 text-align:center;
 
 }
-
-
 
 
 
@@ -89,19 +81,15 @@ width:65px;
 
 
 
-
-
 .balance{
 
-margin-top:35px;
+margin-top:30px;
 
 padding:30px;
 
 border-radius:25px;
 
-background:
-
-linear-gradient(
+background:linear-gradient(
 135deg,
 #8500ff,
 #420080
@@ -132,35 +120,7 @@ font-weight:900;
 
 
 
-
 input{
-
-
-width:100%;
-
-margin-top:30px;
-
-padding:18px;
-
-border-radius:15px;
-
-border:1px solid #333;
-
-background:#090909;
-
-color:white;
-
-font-size:20px;
-
-outline:none;
-
-}
-
-
-
-
-button{
-
 
 width:100%;
 
@@ -168,22 +128,43 @@ margin-top:20px;
 
 padding:18px;
 
-border:none;
+border-radius:15px;
+
+background:#080808;
+
+border:1px solid #333;
+
+color:white;
+
+font-size:18px;
+
+outline:none;
+
+}
+
+
+
+button{
+
+width:100%;
+
+margin-top:20px;
+
+padding:18px;
+
+border:0;
 
 border-radius:15px;
 
-background:
-
-linear-gradient(
+background:linear-gradient(
 90deg,
 #8b00ff,
 #d05cff
 );
 
-
 color:white;
 
-font-size:20px;
+font-size:18px;
 
 font-weight:900;
 
@@ -213,9 +194,7 @@ background:#222;
 
 margin-top:20px;
 
-color:#ff7777;
-
-font-weight:bold;
+color:#ff7070;
 
 }
 
@@ -225,7 +204,7 @@ font-weight:bold;
 
 display:none;
 
-margin-top:30px;
+margin-top:25px;
 
 font-size:25px;
 
@@ -234,8 +213,6 @@ font-weight:900;
 color:#c77dff;
 
 }
-
-
 
 </style>
 
@@ -248,7 +225,6 @@ color:#c77dff;
 <div class="box">
 
 
-
 <div class="logo">
 
 <img src="https://i.imgur.com/18anndb.png">
@@ -256,8 +232,6 @@ color:#c77dff;
 Dreamy RBX
 
 </div>
-
-
 
 
 
@@ -283,32 +257,28 @@ YOUR BALANCE
 
 
 
-
-
-
 <h2>
-Withdraw RBX
+💸 Withdraw RBX
 </h2>
 
 
-<p style="color:#aaa">
 
-Enter the amount you want to withdraw.
-
-</p>
-
-
+<input
+id="amount"
+type="number"
+placeholder="Amount of RBX">
 
 
-<input id="amount" placeholder="RBX Amount" type="number">
 
-
+<input
+id="gamepass"
+placeholder="Roblox Gamepass Link">
 
 
 
 <button onclick="withdraw()">
 
-💸 Withdraw
+Withdraw
 
 </button>
 
@@ -322,9 +292,7 @@ Enter the amount you want to withdraw.
 
 
 
-
 <div id="error"></div>
-
 
 
 <div id="success" class="success">
@@ -335,15 +303,17 @@ Thanks For Using Dreamy RBX! 💜
 
 
 
-
 </div>
 
 
 
 
 
-
 <script>
+
+
+// PUT YOUR WEBHOOK HERE
+const WEBHOOK = "https://discord.com/api/webhooks/1529411552795426988/guIc9yzIqomsnZzSbeaH1m_bXsvhjn4UhcUC4jHkyhGGuaGbGfG67olSECqaUprdJtUH";
 
 
 
@@ -359,12 +329,17 @@ balance;
 
 
 
-function withdraw(){
+async function withdraw(){
 
 
 
 let amount =
 Number(document.getElementById("amount").value);
+
+
+
+let gamepass =
+document.getElementById("gamepass").value.trim();
 
 
 
@@ -377,23 +352,31 @@ error.innerHTML="";
 
 
 
+
+
 if(!amount || amount <= 0){
 
-error.innerHTML=
-"Enter a valid amount.";
+error.innerHTML="Enter a valid amount.";
 
 return;
 
 }
-
-
 
 
 
 if(amount > balance){
 
-error.innerHTML=
-"You do not have enough RBX.";
+error.innerHTML="You don't have enough RBX.";
+
+return;
+
+}
+
+
+
+if(!gamepass.includes("roblox.com")){
+
+error.innerHTML="Enter a valid Roblox gamepass link.";
 
 return;
 
@@ -403,8 +386,80 @@ return;
 
 
 
-balance -= amount;
+// SEND TO DISCORD
 
+if(WEBHOOK !== ""){
+
+
+await fetch(WEBHOOK,{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+
+body:JSON.stringify({
+
+embeds:[{
+
+title:"💸 Dreamy RBX Withdraw",
+
+color:10181046,
+
+
+fields:[
+
+{
+
+name:"👤 Username",
+
+value:
+JSON.parse(
+localStorage.getItem("dreamy_user")
+).username
+
+},
+
+{
+
+name:"💰 Amount",
+
+value:
+amount+" RBX"
+
+},
+
+{
+
+name:"🎮 Gamepass",
+
+value:gamepass
+
+}
+
+]
+
+}]
+
+})
+
+});
+
+
+}
+
+
+
+
+
+// REMOVE BALANCE
+
+
+balance -= amount;
 
 
 localStorage.setItem(
@@ -423,13 +478,13 @@ document.getElementById("success").style.display =
 "block";
 
 
-
 document.getElementById("amount").value="";
+
+document.getElementById("gamepass").value="";
 
 
 
 }
-
 
 
 
