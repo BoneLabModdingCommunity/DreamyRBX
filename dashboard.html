@@ -6,18 +6,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dreamy RBX Dashboard</title>
+<title>Dreamy RBX</title>
 
 <style>
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
 
 *{
 box-sizing:border-box;
-font-family:Inter,Arial,sans-serif;
+font-family:Inter,Arial;
 }
-
 
 body{
 
@@ -25,8 +23,8 @@ margin:0;
 min-height:100vh;
 
 background:
-radial-gradient(circle at top,#8b00ff55,transparent 40%),
-linear-gradient(135deg,#070707,#1b002b);
+radial-gradient(circle at top,#b000ff55,transparent 35%),
+linear-gradient(135deg,#050505,#21003b);
 
 color:white;
 
@@ -36,146 +34,186 @@ justify-content:center;
 }
 
 
-
 .container{
 
-width:900px;
-padding:40px;
-
-}
-
-
-
-.header{
-
-display:flex;
-justify-content:space-between;
-align-items:center;
-
-background:#141414cc;
+width:100%;
+max-width:500px;
 
 padding:25px;
 
+}
+
+
+
+/* TOP PROFILE */
+
+.profile{
+
+background:rgba(20,20,30,.8);
+
+border:1px solid #ffffff20;
+
 border-radius:25px;
 
-border:1px solid #ffffff10;
-
-}
-
-
-
-.user{
+padding:20px;
 
 display:flex;
+
 align-items:center;
+
 gap:15px;
 
+backdrop-filter:blur(20px);
+
 }
 
 
 
-.user img{
+.profile img{
 
-width:80px;
-height:80px;
+width:75px;
+height:75px;
+
 border-radius:50%;
 
-}
-
-
-
-h1{
-
-margin:0;
+border:3px solid #a855ff;
 
 }
 
 
 
-.purple{
+.name{
 
-color:#b65cff;
+font-size:22px;
+font-weight:900;
 
 }
 
+
+
+
+
+/* BALANCE */
 
 
 .balance{
 
-margin-top:30px;
+margin-top:25px;
 
-background:
-linear-gradient(
-135deg,
-#8b00ff,
-#420080
-);
+padding:35px 20px;
 
-padding:30px;
-
-border-radius:25px;
+border-radius:30px;
 
 text-align:center;
 
+background:
+
+linear-gradient(
+135deg,
+#8500ff,
+#430080
+);
+
+box-shadow:
+
+0 0 40px #8b00ff80;
+
+}
+
+
+
+.balance img{
+
+width:55px;
+
+vertical-align:middle;
+
 }
 
 
 
-.balance h2{
+.balance h1{
 
-margin:0;
+font-size:48px;
 
-font-size:18px;
+margin:10px 0 0;
 
-opacity:.8;
+font-weight:900;
+
+}
+
+
+
+
+
+.small{
+
+opacity:.75;
 
 }
 
 
 
-.amount{
 
-font-size:45px;
 
-font-weight:800;
-
-margin-top:10px;
-
-}
-
+/* CARDS */
 
 
 .card{
 
-margin-top:30px;
+margin-top:25px;
 
-background:#141414cc;
+background:
 
-padding:25px;
+rgba(15,15,20,.9);
 
 border-radius:25px;
 
-border:1px solid #ffffff10;
+padding:20px;
+
+border:1px solid #ffffff15;
 
 }
+
+
+
+.title{
+
+font-size:22px;
+
+font-weight:900;
+
+}
+
+
 
 
 
 .quest{
 
-background:#111;
+margin-top:15px;
 
 padding:20px;
 
-border-radius:15px;
+border-radius:18px;
 
-margin-top:15px;
+background:#0b0b0b;
 
 display:flex;
 
 justify-content:space-between;
 
 align-items:center;
+
+border:1px solid #ffffff12;
+
+}
+
+
+
+.quest b{
+
+font-size:17px;
 
 }
 
@@ -183,7 +221,7 @@ align-items:center;
 
 .reward{
 
-color:#b65cff;
+color:#b66cff;
 
 font-weight:bold;
 
@@ -193,17 +231,23 @@ font-weight:bold;
 
 button{
 
-border:none;
+background:
 
-background:#9b00ff;
+linear-gradient(
+90deg,
+#9b00ff,
+#d05cff
+);
 
 color:white;
 
+border:0;
+
 padding:12px 20px;
 
-border-radius:12px;
+border-radius:14px;
 
-font-weight:bold;
+font-weight:900;
 
 cursor:pointer;
 
@@ -211,9 +255,11 @@ cursor:pointer;
 
 
 
-button:hover{
+button:disabled{
 
-background:#c15cff;
+opacity:.4;
+
+cursor:not-allowed;
 
 }
 
@@ -221,13 +267,41 @@ background:#c15cff;
 
 .withdraw{
 
-margin-top:30px;
-
 width:100%;
 
-padding:16px;
+margin-top:20px;
 
-font-size:16px;
+padding:17px;
+
+font-size:17px;
+
+}
+
+
+
+
+
+.logo{
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+gap:8px;
+
+font-weight:900;
+
+font-size:25px;
+
+}
+
+
+
+.logo img{
+
+width:35px;
 
 }
 
@@ -238,58 +312,70 @@ font-size:16px;
 </head>
 
 
-<body>
 
+<body>
 
 
 <div class="container">
 
 
 
-<div class="header">
+<div class="logo">
+
+<img src="https://i.imgur.com/18anndb.png">
+
+Dreamy RBX
+
+</div>
 
 
-<div class="user">
+
+
+
+<div class="profile">
 
 <img id="avatar">
 
 <div>
 
-<h1>
-Dreamy <span class="purple">RBX</span>
-</h1>
-
-<p id="username">
+<div class="name" id="username">
 Loading...
-</p>
+</div>
 
+<div class="small">
+Dreamy Member
 </div>
 
 </div>
 
-
 </div>
+
 
 
 
 
 <div class="balance">
 
-<h2>
-Your Balance
-</h2>
+
+<div class="small">
+YOUR RBX BALANCE
+</div>
 
 
-<div class="amount">
+<h1>
 
-💰 <span id="balance">
+<img src="https://i.imgur.com/18anndb.png">
+
+<span id="balance">
 0
-</span> RBX
+</span>
+
+</h1>
+
 
 </div>
 
 
-</div>
 
 
 
@@ -298,13 +384,16 @@ Your Balance
 <div class="card">
 
 
-<h2>
+<div class="title">
+
 ⭐ Quests
-</h2>
+
+</div>
 
 
 
 <div class="quest">
+
 
 <div>
 
@@ -321,8 +410,10 @@ Click This
 </div>
 
 
-<button onclick="clickQuest()">
-Complete
+<button id="clickQuest" onclick="clickQuest()">
+
+Claim
+
 </button>
 
 
@@ -332,8 +423,8 @@ Complete
 
 
 
-
 <div class="quest">
+
 
 <div>
 
@@ -350,29 +441,52 @@ Daily Reward
 </div>
 
 
-<button onclick="dailyReward()">
+<button id="dailyQuest" onclick="dailyReward()">
+
 Claim
+
 </button>
 
 
 </div>
 
+
+
+</div>
+
+
+
+
+
+
+
+<div class="card">
+
+
+<div class="title">
+💸 Withdraw
+</div>
+
+
+<p class="small">
+Use your earned RBX points for rewards.
+</p>
 
 
 <button class="withdraw" onclick="location.href='withdraw.html'">
 
-💸 Withdraw
+Withdraw
 
 </button>
 
 
-
-
 </div>
 
 
 
+
 </div>
+
 
 
 
@@ -381,9 +495,8 @@ Claim
 <script>
 
 
-let user = JSON.parse(
-localStorage.getItem("dreamy_user")
-);
+let user =
+JSON.parse(localStorage.getItem("dreamy_user"));
 
 
 
@@ -395,9 +508,7 @@ location.href="index.html";
 
 
 
-
 document.getElementById("avatar").src=user.avatar;
-
 
 document.getElementById("username").innerHTML=
 "@" + user.username;
@@ -405,47 +516,28 @@ document.getElementById("username").innerHTML=
 
 
 
+
 let balance =
-localStorage.getItem("dreamy_balance");
+Number(localStorage.getItem("dreamy_balance") || 0);
 
 
 
-if(balance === null){
+function update(){
 
-balance=0;
-
-localStorage.setItem(
-"dreamy_balance",
-0
-);
-
-}
-
-
-
-document.getElementById("balance").innerHTML=balance;
-
-
-
-
-
-function updateBalance(amount){
-
-
-balance =
-Number(balance)+amount;
-
+document.getElementById("balance").innerHTML=
+balance;
 
 localStorage.setItem(
 "dreamy_balance",
 balance
 );
 
-
-document.getElementById("balance").innerHTML=balance;
-
-
 }
+
+
+
+update();
+
 
 
 
@@ -454,12 +546,33 @@ document.getElementById("balance").innerHTML=balance;
 function clickQuest(){
 
 
-updateBalance(5);
+if(localStorage.getItem("click_done")){
 
-
-alert("+5 RBX earned!");
+return;
 
 }
+
+
+balance += 5;
+
+
+localStorage.setItem(
+"click_done",
+"true"
+);
+
+
+document.getElementById("clickQuest").disabled=true;
+
+document.getElementById("clickQuest").innerHTML="Done";
+
+
+update();
+
+
+}
+
+
 
 
 
@@ -473,14 +586,7 @@ new Date().toDateString();
 
 
 
-let claimed =
-localStorage.getItem("daily_reward");
-
-
-
-if(claimed === today){
-
-alert("Already claimed today!");
+if(localStorage.getItem("daily")===today){
 
 return;
 
@@ -488,24 +594,51 @@ return;
 
 
 
+balance += 10;
+
+
 localStorage.setItem(
-"daily_reward",
+"daily",
 today
 );
 
 
+document.getElementById("dailyQuest").disabled=true;
 
-updateBalance(10);
+document.getElementById("dailyQuest").innerHTML="Claimed";
 
 
+update();
 
-alert("+10 RBX Daily Reward!");
 
 }
 
 
 
+
+
+
+if(localStorage.getItem("click_done")){
+
+document.getElementById("clickQuest").disabled=true;
+
+document.getElementById("clickQuest").innerHTML="Done";
+
+}
+
+
+
+if(localStorage.getItem("daily")===new Date().toDateString()){
+
+document.getElementById("dailyQuest").disabled=true;
+
+document.getElementById("dailyQuest").innerHTML="Claimed";
+
+}
+
+
 </script>
+
 
 
 </body>
