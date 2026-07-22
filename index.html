@@ -16,22 +16,27 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;800;900&display=swap');
 
+
 *{
 box-sizing:border-box;
 font-family:Inter,Arial;
 }
 
+
 body{
 
 margin:0;
+
 height:100vh;
 
 display:flex;
+
 align-items:center;
+
 justify-content:center;
 
 background:
-radial-gradient(circle,#8b00ff55,transparent 40%),
+radial-gradient(circle,#9b00ff55,transparent 40%),
 linear-gradient(135deg,#050505,#19002b);
 
 color:white;
@@ -59,10 +64,6 @@ text-align:center;
 
 .logo{
 
-font-size:40px;
-
-font-weight:900;
-
 display:flex;
 
 justify-content:center;
@@ -70,6 +71,10 @@ justify-content:center;
 align-items:center;
 
 gap:15px;
+
+font-size:40px;
+
+font-weight:900;
 
 }
 
@@ -90,15 +95,15 @@ width:100%;
 
 padding:20px;
 
-font-size:20px;
-
 border-radius:15px;
-
-background:#050505;
 
 border:1px solid #333;
 
+background:#050505;
+
 color:white;
+
+font-size:20px;
 
 }
 
@@ -116,17 +121,27 @@ border:0;
 
 border-radius:15px;
 
-font-size:20px;
-
-font-weight:900;
-
 background:linear-gradient(
-90deg,#8b00ff,#d05cff
+90deg,
+#8b00ff,
+#d05cff
 );
 
 color:white;
 
+font-size:20px;
+
+font-weight:900;
+
 cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.03);
 
 }
 
@@ -141,13 +156,15 @@ color:#ff7777;
 }
 
 
-</style>
 
+</style>
 
 </head>
 
 
+
 <body>
+
 
 
 <div class="box">
@@ -162,6 +179,7 @@ Dreamy RBX
 </div>
 
 
+
 <h1>
 Login
 </h1>
@@ -172,9 +190,11 @@ Enter your Roblox username
 </p>
 
 
+
 <input
 id="username"
 placeholder="Roblox Username">
+
 
 
 <button onclick="login()">
@@ -184,7 +204,9 @@ Continue
 </button>
 
 
+
 <div id="error"></div>
+
 
 
 </div>
@@ -193,10 +215,14 @@ Continue
 
 
 
+
+
+
+
 <script>
 
 
-const client =
+const db =
 supabase.createClient(
 SUPABASE_URL,
 SUPABASE_KEY
@@ -205,78 +231,9 @@ SUPABASE_KEY
 
 
 
-async function getRobloxUser(username){
-
-
-let response =
-await fetch(
-"https://users.roblox.com/v1/usernames/users",
-{
-
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-
-usernames:[username],
-
-excludeBannedUsers:true
-
-})
-
-});
-
-
-
-let data =
-await response.json();
-
-
-
-if(!data.data || data.data.length === 0){
-
-return null;
-
-}
-
-
-
-return data.data[0];
-
-}
-
-
-
-
-
-async function getAvatar(id){
-
-
-let r =
-await fetch(
-
-`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${id}&size=420x420&format=Png`
-
-);
-
-
-let data =
-await r.json();
-
-
-return data.data[0].imageUrl;
-
-
-}
-
-
-
-
 
 async function login(){
+
 
 
 let username =
@@ -288,28 +245,60 @@ let error =
 document.getElementById("error");
 
 
+
 error.innerHTML="";
 
 
 
 if(!username){
 
-error.innerHTML="Enter a username";
+error.innerHTML="Enter a Roblox username";
 
 return;
 
 }
+
+
+
+
+
+try{
+
+
+// Ask our Vercel API instead of Roblox directly
+
+let response =
+await fetch("/api/roblox",{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":"application/json"
+
+},
+
+body:JSON.stringify({
+
+username:username
+
+})
+
+});
+
 
 
 
 let roblox =
-await getRobloxUser(username);
+await response.json();
 
 
 
-if(!roblox){
 
-error.innerHTML="Roblox user not found";
+if(!response.ok){
+
+error.innerHTML =
+"Roblox user not found";
 
 return;
 
@@ -318,23 +307,17 @@ return;
 
 
 
-let avatar =
-await getAvatar(
-roblox.id
-);
+
+// Check if user already exists
 
 
-
-
-
-
-let {data}=await client
+let {data}=await db
 
 .from("users")
 
 .select("*")
 
-.eq("username",roblox.name)
+.eq("username",roblox.username)
 
 .single();
 
@@ -344,19 +327,22 @@ let {data}=await client
 
 
 
+
+// Create account if new
+
 if(!data){
 
 
 let result =
-await client
+await db
 
 .from("users")
 
 .insert({
 
-username:roblox.name,
+username:roblox.username,
 
-avatar:avatar,
+avatar:roblox.avatar,
 
 balance:0
 
@@ -366,11 +352,11 @@ balance:0
 .single();
 
 
+
 data=result.data;
 
 
 }
-
 
 
 
@@ -386,7 +372,27 @@ JSON.stringify(data)
 
 
 
-location.href="dashboard.html";
+
+
+window.location.href="dashboard.html";
+
+
+
+
+
+}
+
+catch(e){
+
+
+console.log(e);
+
+
+error.innerHTML=
+"Something went wrong";
+
+
+}
 
 
 
@@ -395,6 +401,7 @@ location.href="dashboard.html";
 
 
 </script>
+
 
 
 </body>
