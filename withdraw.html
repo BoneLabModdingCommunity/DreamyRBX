@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Dreamy RBX Withdraw</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
+
+
+*{
+box-sizing:border-box;
+font-family:Inter,Arial;
+}
+
+
+body{
+
+margin:0;
+
+min-height:100vh;
+
+background:
+radial-gradient(circle at top,#9b00ff55,transparent 40%),
+linear-gradient(135deg,#050505,#18002b);
+
+color:white;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+}
+
+
+
+.box{
+
+width:600px;
+
+padding:45px;
+
+background:#111111dd;
+
+border-radius:35px;
+
+border:1px solid #ffffff15;
+
+box-shadow:0 0 50px #8b00ff30;
+
+text-align:center;
+
+}
+
+
+
+
+
+.logo{
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+gap:15px;
+
+font-size:35px;
+
+font-weight:900;
+
+}
+
+
+
+.logo img{
+
+width:65px;
+
+}
+
+
+
+
+
+.balance{
+
+margin-top:35px;
+
+padding:30px;
+
+border-radius:25px;
+
+background:
+
+linear-gradient(
+135deg,
+#8500ff,
+#420080
+);
+
+}
+
+
+
+.balance img{
+
+width:45px;
+
+vertical-align:middle;
+
+}
+
+
+
+.amount{
+
+font-size:50px;
+
+font-weight:900;
+
+}
+
+
+
+
+
+input{
+
+
+width:100%;
+
+margin-top:30px;
+
+padding:18px;
+
+border-radius:15px;
+
+border:1px solid #333;
+
+background:#090909;
+
+color:white;
+
+font-size:20px;
+
+outline:none;
+
+}
+
+
+
+
+button{
+
+
+width:100%;
+
+margin-top:20px;
+
+padding:18px;
+
+border:none;
+
+border-radius:15px;
+
+background:
+
+linear-gradient(
+90deg,
+#8b00ff,
+#d05cff
+);
+
+
+color:white;
+
+font-size:20px;
+
+font-weight:900;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.03);
+
+}
+
+
+
+.back{
+
+background:#222;
+
+}
+
+
+
+#error{
+
+margin-top:20px;
+
+color:#ff7777;
+
+font-weight:bold;
+
+}
+
+
+
+.success{
+
+display:none;
+
+margin-top:30px;
+
+font-size:25px;
+
+font-weight:900;
+
+color:#c77dff;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="box">
+
+
+
+<div class="logo">
+
+<img src="https://i.imgur.com/18anndb.png">
+
+Dreamy RBX
+
+</div>
+
+
+
+
+
+<div class="balance">
+
+<div>
+YOUR BALANCE
+</div>
+
+
+<div class="amount">
+
+<img src="https://i.imgur.com/18anndb.png">
+
+<span id="balance">
+0
+</span>
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<h2>
+Withdraw RBX
+</h2>
+
+
+<p style="color:#aaa">
+
+Enter the amount you want to withdraw.
+
+</p>
+
+
+
+
+<input id="amount" placeholder="RBX Amount" type="number">
+
+
+
+
+
+<button onclick="withdraw()">
+
+💸 Withdraw
+
+</button>
+
+
+
+<button class="back" onclick="location.href='dashboard.html'">
+
+← Back Dashboard
+
+</button>
+
+
+
+
+<div id="error"></div>
+
+
+
+<div id="success" class="success">
+
+Thanks For Using Dreamy RBX! 💜
+
+</div>
+
+
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+
+let balance =
+Number(localStorage.getItem("dreamy_balance") || 0);
+
+
+
+document.getElementById("balance").innerHTML =
+balance;
+
+
+
+
+
+function withdraw(){
+
+
+
+let amount =
+Number(document.getElementById("amount").value);
+
+
+
+let error =
+document.getElementById("error");
+
+
+
+error.innerHTML="";
+
+
+
+if(!amount || amount <= 0){
+
+error.innerHTML=
+"Enter a valid amount.";
+
+return;
+
+}
+
+
+
+
+
+if(amount > balance){
+
+error.innerHTML=
+"You do not have enough RBX.";
+
+return;
+
+}
+
+
+
+
+
+balance -= amount;
+
+
+
+localStorage.setItem(
+"dreamy_balance",
+balance
+);
+
+
+
+document.getElementById("balance").innerHTML =
+balance;
+
+
+
+document.getElementById("success").style.display =
+"block";
+
+
+
+document.getElementById("amount").value="";
+
+
+
+}
+
+
+
+
+</script>
+
+
+</body>
+
+</html>
