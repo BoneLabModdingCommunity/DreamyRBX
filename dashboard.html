@@ -14,9 +14,8 @@
 
 *{
 box-sizing:border-box;
-font-family:Inter,Arial;
+font-family:Inter,Arial,sans-serif;
 }
-
 
 body{
 
@@ -35,7 +34,9 @@ color:white;
 .wrapper{
 
 max-width:1400px;
+
 margin:auto;
+
 padding:40px;
 
 display:grid;
@@ -51,7 +52,7 @@ gap:30px;
 .sidebar,
 .main{
 
-background:#111111cc;
+background:#111111dd;
 
 border:1px solid #ffffff15;
 
@@ -76,7 +77,6 @@ font-size:30px;
 font-weight:900;
 
 }
-
 
 
 .logo img{
@@ -116,7 +116,6 @@ font-weight:900;
 }
 
 
-
 .member{
 
 text-align:center;
@@ -139,13 +138,13 @@ linear-gradient(
 #420080
 );
 
-border-radius:30px;
-
 padding:45px;
+
+border-radius:30px;
 
 text-align:center;
 
-box-shadow:0 0 50px #8b00ff55;
+box-shadow:0 0 50px #8b00ff70;
 
 }
 
@@ -154,6 +153,8 @@ box-shadow:0 0 50px #8b00ff55;
 .balance-title{
 
 opacity:.8;
+
+font-size:18px;
 
 }
 
@@ -171,11 +172,12 @@ font-weight:900;
 
 .balance-number img{
 
-width:65px;
+width:70px;
 
 vertical-align:middle;
 
 }
+
 
 
 
@@ -207,15 +209,16 @@ margin-top:20px;
 
 
 
+
 .quest{
 
 background:#181818;
 
-border:1px solid #ffffff12;
-
 border-radius:25px;
 
 padding:25px;
+
+border:1px solid #ffffff15;
 
 }
 
@@ -253,31 +256,25 @@ button{
 
 margin-top:20px;
 
-background:linear-gradient(
+padding:15px 30px;
+
+border:0;
+
+border-radius:15px;
+
+background:
+
+linear-gradient(
 90deg,
 #8b00ff,
 #d05cff
 );
 
-border:none;
-
 color:white;
 
 font-weight:900;
 
-padding:15px 30px;
-
-border-radius:15px;
-
 cursor:pointer;
-
-}
-
-
-
-button:hover{
-
-transform:scale(1.05);
 
 }
 
@@ -287,7 +284,7 @@ button:disabled{
 
 opacity:.4;
 
-transform:none;
+cursor:not-allowed;
 
 }
 
@@ -317,6 +314,7 @@ padding:20px;
 
 }
 
+
 .quest-grid{
 
 grid-template-columns:1fr;
@@ -332,13 +330,13 @@ font-size:45px;
 }
 
 
+
 </style>
 
 </head>
 
 
 <body>
-
 
 
 <div class="wrapper">
@@ -361,14 +359,17 @@ Dreamy RBX
 <img id="avatar" class="avatar">
 
 
-
 <div id="username" class="username">
+
 Loading...
+
 </div>
 
 
 <div class="member">
+
 Dreamy Member
+
 </div>
 
 
@@ -389,22 +390,29 @@ Dreamy Member
 
 
 <div class="balance-title">
+
 YOUR RBX BALANCE
+
 </div>
+
 
 
 <div class="balance-number">
 
+
 <img src="https://i.imgur.com/18anndb.png">
+
 
 <span id="balance">
 0
 </span>
 
+
 </div>
 
 
 </div>
+
 
 
 
@@ -419,7 +427,7 @@ YOUR RBX BALANCE
 
 
 
-<div class="quest-grid" id="quests">
+<div id="quests" class="quest-grid">
 
 </div>
 
@@ -439,7 +447,6 @@ YOUR RBX BALANCE
 </div>
 
 
-
 </div>
 
 
@@ -448,8 +455,10 @@ YOUR RBX BALANCE
 
 
 
-
 <script>
+
+
+const MAX_RBX = 200;
 
 
 
@@ -470,7 +479,6 @@ document.getElementById("avatar").src =
 user.avatar;
 
 
-
 document.getElementById("username").innerHTML =
 "@" + user.username;
 
@@ -480,6 +488,8 @@ document.getElementById("username").innerHTML =
 
 let balance =
 Number(localStorage.getItem("dreamy_balance") || 0);
+
+
 
 
 
@@ -505,13 +515,15 @@ update();
 
 
 
-const questPool = [
+
+const questPool=[
 
 
 {
-title:"Watch A Video",
-desc:"Watch a Dreamy RBX video until the end.",
-reward:15
+title:"Watch KreekCraft Video",
+desc:"Watch the KreekCraft Roblox video until the end.",
+reward:15,
+video:"https://www.youtube.com/embed/WWXU9rMJEtw"
 },
 
 
@@ -523,8 +535,8 @@ reward:10
 
 
 {
-title:"Visit Website",
-desc:"Spend time exploring Dreamy RBX.",
+title:"Visit Dreamy RBX",
+desc:"Explore the website.",
 reward:5
 },
 
@@ -545,19 +557,14 @@ reward:25
 
 {
 title:"Invite Friend",
-desc:"Share Dreamy RBX with someone.",
+desc:"Tell a friend about Dreamy RBX.",
 reward:15
-},
-
-
-{
-title:"Check Updates",
-desc:"Look at the latest Dreamy RBX news.",
-reward:10
 }
 
 
 ];
+
+
 
 
 
@@ -577,16 +584,14 @@ questPool
 function loadQuests(){
 
 
-let box =
-document.getElementById("quests");
-
+let box=document.getElementById("quests");
 
 
 box.innerHTML="";
 
 
 
-quests.forEach((q,index)=>{
+quests.forEach(q=>{
 
 
 let id =
@@ -601,28 +606,36 @@ localStorage.getItem(id);
 
 box.innerHTML += `
 
+
 <div class="quest">
 
 
-<h2>
-${q.title}
-</h2>
+<h2>${q.title}</h2>
 
 
-<p>
-${q.desc}
-</p>
+<p>${q.desc}</p>
 
 
 <div class="reward">
+
 +${q.reward} RBX
+
 </div>
 
 
 
-<button 
-onclick="completeQuest('${id}',${q.reward},this)"
+<button
+
+onclick="${
+q.video
+?
+`watchVideo('${id}',${q.reward},this,'${q.video}')`
+:
+`completeQuest('${id}',${q.reward},this)`
+}"
+
 ${done ? "disabled":""}
+
 >
 
 ${done ? "Completed":"Claim"}
@@ -633,7 +646,9 @@ ${done ? "Completed":"Claim"}
 
 </div>
 
+
 `;
+
 
 });
 
@@ -646,11 +661,24 @@ ${done ? "Completed":"Claim"}
 
 
 
+
 function completeQuest(id,reward,button){
 
 
+if(localStorage.getItem(id))
+return;
 
-if(localStorage.getItem(id)) return;
+
+
+if(balance + reward > MAX_RBX){
+
+alert(
+"You reached the 200 RBX limit. Withdraw first!"
+);
+
+return;
+
+}
 
 
 
@@ -670,7 +698,6 @@ button.disabled=true;
 button.innerHTML="Completed";
 
 
-
 update();
 
 
@@ -680,8 +707,96 @@ update();
 
 
 
-loadQuests();
 
+
+
+
+function watchVideo(id,reward,button,video){
+
+
+
+let win=window.open(
+"",
+"_blank",
+"width=1000,height=700"
+);
+
+
+
+win.document.write(`
+
+<html>
+
+<body style="
+background:#111;
+color:white;
+text-align:center;
+font-family:Arial;
+">
+
+
+<h1>
+Watch KreekCraft Video
+</h1>
+
+
+<iframe
+
+width="900"
+
+height="500"
+
+src="${video}"
+
+allowfullscreen>
+
+</iframe>
+
+
+
+<br><br>
+
+
+<button onclick="
+
+window.opener.completeQuest(
+'${id}',
+${reward},
+window.opener.document.querySelector('button')
+);
+
+window.close();
+
+"
+
+style="
+padding:15px;
+background:#9b00ff;
+color:white;
+border:0;
+border-radius:10px;
+">
+
+I Finished Watching
+
+</button>
+
+
+</body>
+
+</html>
+
+`);
+
+
+}
+
+
+
+
+
+
+loadQuests();
 
 
 </script>
