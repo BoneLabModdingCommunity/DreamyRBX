@@ -6,86 +6,50 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dreamy RBX</title>
+<title>Dreamy RBX Dashboard</title>
 
 <style>
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@500;700;900&display=swap');
+
 
 *{
 box-sizing:border-box;
 font-family:Inter,Arial;
 }
 
+
 body{
 
 margin:0;
+
 min-height:100vh;
 
 background:
-radial-gradient(circle at top,#b000ff55,transparent 35%),
-linear-gradient(135deg,#050505,#21003b);
+radial-gradient(circle at top left,#9b00ff55,transparent 40%),
+linear-gradient(135deg,#050505,#18002b);
 
 color:white;
 
-display:flex;
-justify-content:center;
-
-}
-
-
-.container{
-
-width:100%;
-max-width:500px;
-
-padding:25px;
-
 }
 
 
 
-/* TOP PROFILE */
-
-.profile{
-
-background:rgba(20,20,30,.8);
-
-border:1px solid #ffffff20;
-
-border-radius:25px;
-
-padding:20px;
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-backdrop-filter:blur(20px);
-
-}
 
 
+.wrapper{
 
-.profile img{
+max-width:1400px;
 
-width:75px;
-height:75px;
+margin:auto;
 
-border-radius:50%;
+padding:40px;
 
-border:3px solid #a855ff;
+display:grid;
 
-}
+grid-template-columns:330px 1fr;
 
-
-
-.name{
-
-font-size:22px;
-font-weight:900;
+gap:30px;
 
 }
 
@@ -93,191 +57,19 @@ font-weight:900;
 
 
 
-/* BALANCE */
+.sidebar{
 
-
-.balance{
-
-margin-top:25px;
-
-padding:35px 20px;
-
-border-radius:30px;
-
-text-align:center;
-
-background:
-
-linear-gradient(
-135deg,
-#8500ff,
-#430080
-);
-
-box-shadow:
-
-0 0 40px #8b00ff80;
-
-}
-
-
-
-.balance img{
-
-width:55px;
-
-vertical-align:middle;
-
-}
-
-
-
-.balance h1{
-
-font-size:48px;
-
-margin:10px 0 0;
-
-font-weight:900;
-
-}
-
-
-
-
-
-.small{
-
-opacity:.75;
-
-}
-
-
-
-
-
-/* CARDS */
-
-
-.card{
-
-margin-top:25px;
-
-background:
-
-rgba(15,15,20,.9);
-
-border-radius:25px;
-
-padding:20px;
+background:#111111cc;
 
 border:1px solid #ffffff15;
 
-}
+border-radius:30px;
 
+padding:30px;
 
-
-.title{
-
-font-size:22px;
-
-font-weight:900;
+height:fit-content;
 
 }
-
-
-
-
-
-.quest{
-
-margin-top:15px;
-
-padding:20px;
-
-border-radius:18px;
-
-background:#0b0b0b;
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
-border:1px solid #ffffff12;
-
-}
-
-
-
-.quest b{
-
-font-size:17px;
-
-}
-
-
-
-.reward{
-
-color:#b66cff;
-
-font-weight:bold;
-
-}
-
-
-
-button{
-
-background:
-
-linear-gradient(
-90deg,
-#9b00ff,
-#d05cff
-);
-
-color:white;
-
-border:0;
-
-padding:12px 20px;
-
-border-radius:14px;
-
-font-weight:900;
-
-cursor:pointer;
-
-}
-
-
-
-button:disabled{
-
-opacity:.4;
-
-cursor:not-allowed;
-
-}
-
-
-
-.withdraw{
-
-width:100%;
-
-margin-top:20px;
-
-padding:17px;
-
-font-size:17px;
-
-}
-
-
 
 
 
@@ -287,21 +79,307 @@ display:flex;
 
 align-items:center;
 
-justify-content:center;
+gap:12px;
 
-gap:8px;
+font-size:30px;
 
 font-weight:900;
 
-font-size:25px;
+margin-bottom:35px;
+
+}
+
+
+.logo img{
+
+width:55px;
 
 }
 
 
 
-.logo img{
+.avatar{
 
-width:35px;
+width:130px;
+
+height:130px;
+
+border-radius:50%;
+
+border:4px solid #a855ff;
+
+display:block;
+
+margin:auto;
+
+}
+
+
+
+.username{
+
+text-align:center;
+
+font-size:25px;
+
+font-weight:900;
+
+margin-top:15px;
+
+}
+
+
+
+.member{
+
+text-align:center;
+
+color:#aaa;
+
+}
+
+
+
+.main{
+
+
+background:#111111aa;
+
+border-radius:30px;
+
+padding:35px;
+
+border:1px solid #ffffff15;
+
+}
+
+
+
+
+
+.balance{
+
+
+background:
+
+linear-gradient(
+135deg,
+#8500ff,
+#420080
+);
+
+
+padding:45px;
+
+border-radius:30px;
+
+text-align:center;
+
+box-shadow:0 0 50px #8b00ff55;
+
+}
+
+
+
+.balance-title{
+
+font-size:18px;
+
+opacity:.8;
+
+}
+
+
+
+.balance-number{
+
+font-size:70px;
+
+font-weight:900;
+
+margin-top:15px;
+
+}
+
+
+
+.balance-number img{
+
+width:70px;
+
+vertical-align:middle;
+
+}
+
+
+
+
+
+.section-title{
+
+font-size:30px;
+
+font-weight:900;
+
+margin-top:35px;
+
+}
+
+
+
+
+
+.quest-grid{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:20px;
+
+margin-top:20px;
+
+}
+
+
+
+
+
+.quest{
+
+
+background:#181818;
+
+border-radius:25px;
+
+padding:30px;
+
+border:1px solid #ffffff12;
+
+
+}
+
+
+
+.quest h2{
+
+margin:0;
+
+}
+
+
+
+.reward{
+
+color:#c77dff;
+
+font-size:22px;
+
+font-weight:900;
+
+}
+
+
+
+.quest p{
+
+color:#aaa;
+
+}
+
+
+
+
+
+button{
+
+
+background:
+
+linear-gradient(
+90deg,
+#8b00ff,
+#d05cff
+);
+
+
+border:0;
+
+color:white;
+
+font-size:16px;
+
+font-weight:900;
+
+padding:15px 30px;
+
+border-radius:15px;
+
+cursor:pointer;
+
+}
+
+
+
+button:hover{
+
+transform:scale(1.03);
+
+}
+
+
+
+button:disabled{
+
+opacity:.4;
+
+transform:none;
+
+}
+
+
+
+.withdraw{
+
+margin-top:30px;
+
+width:100%;
+
+padding:20px;
+
+font-size:20px;
+
+}
+
+
+
+
+
+@media(max-width:900px){
+
+
+.wrapper{
+
+grid-template-columns:1fr;
+
+padding:20px;
+
+}
+
+
+.quest-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+.balance-number{
+
+font-size:45px;
+
+}
+
 
 }
 
@@ -316,8 +394,14 @@ width:35px;
 <body>
 
 
-<div class="container">
 
+<div class="wrapper">
+
+
+
+
+
+<div class="sidebar">
 
 
 <div class="logo">
@@ -330,39 +414,43 @@ Dreamy RBX
 
 
 
+<img id="avatar" class="avatar">
 
 
-<div class="profile">
-
-<img id="avatar">
-
-<div>
-
-<div class="name" id="username">
+<div id="username" class="username">
 Loading...
 </div>
 
-<div class="small">
+
+<div class="member">
 Dreamy Member
 </div>
 
-</div>
 
 </div>
 
 
+
+
+
+
+
+<div class="main">
 
 
 
 <div class="balance">
 
 
-<div class="small">
-YOUR RBX BALANCE
+<div class="balance-title">
+
+YOUR AVAILABLE RBX
+
 </div>
 
 
-<h1>
+
+<div class="balance-number">
 
 <img src="https://i.imgur.com/18anndb.png">
 
@@ -370,7 +458,7 @@ YOUR RBX BALANCE
 0
 </span>
 
-</h1>
+</div>
 
 
 </div>
@@ -380,44 +468,17 @@ YOUR RBX BALANCE
 
 
 
+<div class="section-title">
 
-<div class="card">
-
-
-<div class="title">
-
-⭐ Quests
+⭐ Daily Quests
 
 </div>
 
 
 
-<div class="quest">
 
 
-<div>
-
-<b>
-Click This
-</b>
-
-<br>
-
-<span class="reward">
-+5 RBX
-</span>
-
-</div>
-
-
-<button id="clickQuest" onclick="clickQuest()">
-
-Claim
-
-</button>
-
-
-</div>
+<div class="quest-grid">
 
 
 
@@ -425,67 +486,157 @@ Claim
 
 <div class="quest">
 
-
-<div>
-
-<b>
-Daily Reward
-</b>
-
-<br>
-
-<span class="reward">
-+10 RBX
-</span>
-
-</div>
+<h2>
+Visit Dreamy RBX
+</h2>
 
 
-<button id="dailyQuest" onclick="dailyReward()">
-
-Claim
-
-</button>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="card">
-
-
-<div class="title">
-💸 Withdraw
-</div>
-
-
-<p class="small">
-Use your earned RBX points for rewards.
+<p>
+Open the website today.
 </p>
+
+
+<div class="reward">
++5 RBX
+</div>
+
+
+<br>
+
+
+<button id="visit" onclick="claim('visit',5)">
+Claim
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="quest">
+
+
+<h2>
+Daily Login
+</h2>
+
+
+<p>
+Come back every day.
+</p>
+
+
+<div class="reward">
++10 RBX
+</div>
+
+
+<br>
+
+
+<button id="daily" onclick="daily()">
+Claim
+</button>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="quest">
+
+
+<h2>
+Complete Profile
+</h2>
+
+
+<p>
+Connect your Roblox username.
+</p>
+
+
+<div class="reward">
++25 RBX
+</div>
+
+
+<br>
+
+
+<button id="profile" onclick="claim('profile',25)">
+Claim
+</button>
+
+
+</div>
+
+
+
+
+
+
+<div class="quest">
+
+
+<h2>
+Future Quest
+</h2>
+
+
+<p>
+More rewards coming soon.
+</p>
+
+
+<div class="reward">
++50 RBX
+</div>
+
+
+<br>
+
+
+<button disabled>
+Locked
+</button>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
 
 
 <button class="withdraw" onclick="location.href='withdraw.html'">
 
-Withdraw
+💸 Withdraw RBX
 
 </button>
 
 
-</div>
-
-
 
 
 </div>
+
+
+
+</div>
+
 
 
 
@@ -508,24 +659,22 @@ location.href="index.html";
 
 
 
-document.getElementById("avatar").src=user.avatar;
+avatar.src=user.avatar;
 
-document.getElementById("username").innerHTML=
-"@" + user.username;
+username.innerHTML="@"+user.username;
 
 
 
 
 
 let balance =
-Number(localStorage.getItem("dreamy_balance") || 0);
+Number(localStorage.getItem("dreamy_balance")||0);
 
 
 
 function update(){
 
-document.getElementById("balance").innerHTML=
-balance;
+document.getElementById("balance").innerHTML=balance;
 
 localStorage.setItem(
 "dreamy_balance",
@@ -543,28 +692,26 @@ update();
 
 
 
-function clickQuest(){
+function claim(id,amount){
 
 
-if(localStorage.getItem("click_done")){
+if(localStorage.getItem(id)){
 
 return;
 
 }
 
 
-balance += 5;
+
+balance+=amount;
 
 
-localStorage.setItem(
-"click_done",
-"true"
-);
+localStorage.setItem(id,true);
 
 
-document.getElementById("clickQuest").disabled=true;
+document.getElementById(id).disabled=true;
 
-document.getElementById("clickQuest").innerHTML="Done";
+document.getElementById(id).innerHTML="Completed";
 
 
 update();
@@ -577,13 +724,10 @@ update();
 
 
 
+function daily(){
 
-function dailyReward(){
 
-
-let today =
-new Date().toDateString();
-
+let today=new Date().toDateString();
 
 
 if(localStorage.getItem("daily")===today){
@@ -594,18 +738,15 @@ return;
 
 
 
-balance += 10;
+balance+=10;
 
 
-localStorage.setItem(
-"daily",
-today
-);
+localStorage.setItem("daily",today);
 
 
-document.getElementById("dailyQuest").disabled=true;
+document.getElementById("daily").disabled=true;
 
-document.getElementById("dailyQuest").innerHTML="Claimed";
+document.getElementById("daily").innerHTML="Claimed";
 
 
 update();
@@ -615,30 +756,7 @@ update();
 
 
 
-
-
-
-if(localStorage.getItem("click_done")){
-
-document.getElementById("clickQuest").disabled=true;
-
-document.getElementById("clickQuest").innerHTML="Done";
-
-}
-
-
-
-if(localStorage.getItem("daily")===new Date().toDateString()){
-
-document.getElementById("dailyQuest").disabled=true;
-
-document.getElementById("dailyQuest").innerHTML="Claimed";
-
-}
-
-
 </script>
-
 
 
 </body>
